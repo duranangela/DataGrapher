@@ -8,6 +8,7 @@ class GraphService
 
   def total
     if @characteristics == 'Voter Data'
+      location = @location
       location = 'US' if location == 'United States'
       VoterDatum.where(state: location.upcase).where(age: 'Total').first.total.delete(",").to_i * 1000
     else
@@ -43,14 +44,10 @@ class GraphService
         age[1]
       end.drop(1)
     elsif @characteristics == 'Voter Data'
-      if location == 'United States'
-        VoterDatum.where(state: 'US').pluck(:total).map do |num|
-          num.delete(",").to_i * 1000
-        end
-      else
-        VoterDatum.where(state: location.upcase).pluck(:total).map do |num|
-          num.delete(",").to_i * 1000
-        end
+      location = @location
+      location = 'US' if location == 'United States'
+      VoterDatum.where(state: location.upcase).pluck(:total).map do |num|
+        num.delete(",").to_i * 1000
       end.drop(1)
     # elsif @characteristics == 'Race'
     #   JSON.parse(race_response.body).map do |race|
@@ -61,14 +58,10 @@ class GraphService
 
   def popsb
     if @characteristics == 'Voter Data'
-      if location == 'United States'
-        VoterDatum.where(state: 'US').pluck(:registered).map do |num|
-          num.delete(",").to_i * 1000
-        end
-      else
-        VoterDatum.where(state: location.upcase).pluck(:registered).map do |num|
-          num.delete(",").to_i * 1000
-        end
+      location = @location
+      location = 'US' if location == 'United States'
+      VoterDatum.where(state: location.upcase).pluck(:registered).map do |num|
+        num.delete(",").to_i * 1000
       end.drop(1)
     else
       nil
@@ -77,14 +70,10 @@ class GraphService
 
   def popsc
     if @characteristics == 'Voter Data'
-      if location == 'United States'
-        VoterDatum.where(state: 'US').pluck(:voted).map do |num|
-          num.delete(",").to_i * 1000
-        end
-      else
-        VoterDatum.where(state: location.upcase).pluck(:voted).map do |num|
-          num.delete(",").to_i * 1000
-        end
+      location = @location
+      location = 'US' if location == 'United States'
+      VoterDatum.where(state: location.upcase).pluck(:voted).map do |num|
+        num.delete(",").to_i * 1000
       end.drop(1)
     else
       nil
