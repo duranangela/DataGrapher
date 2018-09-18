@@ -8,11 +8,8 @@ class GraphService
 
   def total
     if @characteristics == 'Voter Data'
-      if location == 'United States'
-        VoterDatum.where(state: 'US').where(age: 'Total').first.total.delete(",").to_i * 1000
-      else
-        VoterDatum.where(state: location.upcase).where(age: 'Total').first.total.delete(",").to_i * 1000
-      end
+      location = 'US' if location == 'United States'
+      VoterDatum.where(state: location.upcase).where(age: 'Total').first.total.delete(",").to_i * 1000
     else
       JSON.parse(total_response.body)[1][1]
     end
