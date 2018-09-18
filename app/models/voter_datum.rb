@@ -1,0 +1,2 @@
+class VoterDatum < ApplicationRecord
+end

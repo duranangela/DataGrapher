@@ -1,0 +1,191 @@
+<div class='container-fluid'>
+
+  <div class='header'>
+      <h1>Welcome to DataGrapher</h1>
+      <br>
+      <h3>Quickly see Population Statistics nationally or by state by choosing your options below<h3>
+  </div>
+
+  <div class='selections'>
+    <p><%= select_tag 'location', options_for_select(@states) %> &ensp;
+      <button type="button" id='show' class="btn btn-success">Submit</button></p>
+
+    <script>
+      $(document).ready(function(){
+        $("#show").click(function(){
+          if ((document.getElementById('location').value) === ('United States')) {
+            $('.select2').show();
+          } else {
+            $('.select3').show();
+          };
+        });
+      });
+
+      $(document).ready(function(){
+        $("#reload").click(function(){
+          location.reload();
+        });
+      });
+    </script>
+
+    <p class='select2'>Sort Population by: <%= select_tag 'stats1', options_for_select(['State', 'Age', 'Voter Data']) %> &ensp;
+      <button type="button" onclick="makeGraph()" class="btn btn-success">Submit</button><br>(Voter data reflects 2016 election)</p>
+
+    <p class='select3'>Sort Population by: <%= select_tag 'stats2', options_for_select(['Age', 'Voter Data']) %> &ensp;
+      <button type="button" onclick="makeGraph()" class="btn btn-success">Submit</button><br>(Voter data reflects 2016 election)</p>
+
+    <p><button type="button" id='reload' class="btn btn-primary">Reset for new query</button></p>
+  </div>
+
+  <div class='graph'>
+  <div class='inside-graph'>
+    <h3 id='results'><h3>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <canvas id="myChart" width='1000px'></canvas>
+    <script>
+    function makeGraph() {
+      var location = document.getElementById('location').value;
+      if (location === 'United States') {
+        var stats = document.getElementById('stats1').value;
+      } else {
+        var stats = document.getElementById('stats2').value;
+      };
+
+      if ((stats === 'Age') || (stats === 'State')){
+        fetch(`http://localhost:3000/api/v1/graphs?location=${location}&stats=${stats}`)
+          .then(function(response) {
+            return response.json();
+            debugger
+          }).then(function(data) {
+          var labels = data.labels;
+          var pops = data.pops;
+          var colors = data.colors;
+          var stats = data.stats;
+          var total = Number(data.total).toLocaleString();
+
+          document.getElementById('results').innerHTML = `Results for ${location} - Total Population: ${total}`;
+          var ctx = document.getElementById("myChart");
+
+          var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: labels,
+              datasets: [{
+                  data: pops,
+                  backgroundColor: colors,
+                  borderColor: 'black',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              legend: {
+                display: false
+              },
+              scales: {
+                  yAxes: [{
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Population',
+                        fontSize: 20
+                      },
+                      ticks: {
+                          beginAtZero:true
+                      }
+                  }],
+                  xAxes: [{
+                      scaleLabel: {
+                        display: true,
+                        labelString: stats,
+                        fontSize: 20
+                      }
+                  }]
+              }
+            }
+          });
+        });
+      } else {
+      fetch(`http://localhost:3000/api/v1/graphs?location=${location}&stats=${stats}`)
+        .then(function(response) {
+          return response.json();
+        }).then(function(data) {
+          var labels = data.labels;
+          var pops = data.pops;
+          var popsb = data.popsb;
+          var popsc = data.popsc;
+          var colors = data.colors;
+          var stats = data.stats;
+          var total = Number(data.total).toLocaleString();
+
+          document.getElementById('results').innerHTML = `Results for ${location} - Total Citizen Population 18 and over: ${total}`;
+
+          var ctx = document.getElementById("myChart");
+
+          var firstData = {
+            label: 'Total Citizen Population',
+            data: pops,
+            backgroundColor: 'red',
+            borderColor: 'black',
+            borderWidth: 1
+          };
+
+          var secondData = {
+            label: 'Registered Voters',
+            data: popsb,
+            backgroundColor: 'blue',
+            borderColor: 'black',
+            borderWidth: 1
+          };
+
+          var thirdData = {
+            label: 'Voted',
+            data: popsc,
+            backgroundColor: 'green',
+            borderColor: 'black',
+            borderWidth: 1
+          };
+
+          var totalData = {
+            labels: labels,
+            datasets: [firstData, secondData, thirdData]
+          };
+
+          var chartOptions = {
+            legend: {
+              display: true
+            },
+            scales: {
+              xAxes: [{
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Age',
+                    fontSize: 20
+                  }
+              }],
+              yAxes: [{
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Population',
+                    fontSize: 20
+                  },
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+            }
+          };
+
+          var ctx = document.getElementById("myChart");
+          var barChart = new Chart(ctx, {
+            type: 'bar',
+            data: totalData,
+            options: chartOptions
+          });
+        });
+      };
+    };
+    </script>
+  </div>
+  </div>
+</div>
