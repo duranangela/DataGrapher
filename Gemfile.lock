@@ -130,7 +130,7 @@ GEM
     omniauth-google-oauth2 (0.2.2)
       omniauth (~> 1.0)
       omniauth-oauth2
-    omniauth-oauth2 (1.0.2)
+    omniauth-oauth2 (1.1.2)
       oauth2 (~> 0.6.0)
       omniauth (~> 1.0)
     pg (1.1.3)
