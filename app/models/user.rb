@@ -1,5 +1,9 @@
 class User < ApplicationRecord
 
+  validates_presence_of :provider
+  validates_presence_of :uid
+  validates_presence_of :name
+
   def self.sign_in_from_omniauth(auth)
     find_by(provider: auth['provider'], uid: auth['uid']) || create_user_from_omniauth(auth)
   end

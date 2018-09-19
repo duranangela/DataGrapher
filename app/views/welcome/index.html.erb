@@ -15,7 +15,7 @@
   </div>
 
   <div class='selections'>
-    <p><%= select_tag 'location', options_for_select(@states) %> &ensp;
+    <p class='select1'><%= select_tag 'location', options_for_select(@states) %> &ensp;
       <button type="button" id='show' class="btn btn-success">Submit</button></p>
 
     <script>
@@ -62,7 +62,7 @@
       };
 
       if ((stats === 'Age') || (stats === 'State')){
-        fetch(`https://pacific-citadel-43459.herokuapp.com/api/v1/graphs?location=${location}&stats=${stats}`)
+        fetch(`http://localhost:3000/api/v1/graphs?location=${location}&stats=${stats}`)
           .then(function(response) {
             return response.json();
             debugger
@@ -114,7 +114,7 @@
           });
         });
       } else {
-      fetch(`https://pacific-citadel-43459.herokuapp.com/api/v1/graphs?location=${location}&stats=${stats}`)
+      fetch(`http://localhost:3000/api/v1/graphs?location=${location}&stats=${stats}`)
         .then(function(response) {
           return response.json();
         }).then(function(data) {

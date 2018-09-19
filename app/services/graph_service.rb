@@ -80,6 +80,8 @@ class GraphService
     end
   end
 
+  private
+
   def total_response
     conn.get("?", total_params)
   end
