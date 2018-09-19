@@ -14,6 +14,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'faraday'
 gem 'figaro'
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'omniauth-google-oauth2'
 
 
 group :development, :test do

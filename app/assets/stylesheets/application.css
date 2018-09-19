@@ -4,11 +4,15 @@
   align-items: center;
 }
 
+.top img {
+  width: 100%;
+  height: auto;
+}
+
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: pink;
 }
 
 .selections {
