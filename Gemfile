@@ -15,6 +15,7 @@ gem 'faraday'
 gem 'figaro'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'omniauth-google-oauth2'
+gem 'newrelic_rpm'
 
 
 group :development, :test do
