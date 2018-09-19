@@ -9,20 +9,31 @@ body {
 }
 
 .top {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 20px;
 }
 
 .top img {
-  width: 80%;
+  width: 75%;
   height: auto;
+  align-self: end;
+}
+
+.top h2 {
+  align-self: end;
+  padding-bottom: 10px;
 }
 
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+hr {
+  border: 2px solid black;
+  width: 100%;
 }
 
 .selections {

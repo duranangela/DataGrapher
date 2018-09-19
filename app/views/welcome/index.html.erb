@@ -1,14 +1,17 @@
 <div class='container-fluid'>
 
-  <div class='top'> <%= image_tag('DataGrapher.png') %></div>
+  <div class='top'> <%= image_tag('DataGrapher.png') %>
+    <h2><% if current_user %>
+      <%= link_to 'Sign Out', sign_out_path, method: :delete %>
+    <% else %>
+      <%= link_to 'Sign in with Google', 'auth/google_oauth2' %>
+    <% end %></h2>
+  </div>
 
   <div class='header'>
-      <% if current_user %>
-        <%= link_to 'Sign Out', sign_out_path, method: :delete %>
-      <% else %>
-        <%= link_to 'Sign in with Google', 'auth/google_oauth2' %>
-      <% end %>
-      <h3>Quickly see Population Statistics nationally or by state by choosing your options below<h3>
+    <hr />
+    <br>
+    <h3>Quickly see Population Statistics nationally or by state by choosing your options below<h3>
   </div>
 
   <div class='selections'>
@@ -59,7 +62,7 @@
       };
 
       if ((stats === 'Age') || (stats === 'State')){
-        fetch(`http://localhost:3000/api/v1/graphs?location=${location}&stats=${stats}`)
+        fetch(`https://pacific-citadel-43459.herokuapp.com/api/v1/graphs?location=${location}&stats=${stats}`)
           .then(function(response) {
             return response.json();
             debugger
@@ -111,7 +114,7 @@
           });
         });
       } else {
-      fetch(`http://localhost:3000/api/v1/graphs?location=${location}&stats=${stats}`)
+      fetch(`https://pacific-citadel-43459.herokuapp.com/api/v1/graphs?location=${location}&stats=${stats}`)
         .then(function(response) {
           return response.json();
         }).then(function(data) {
