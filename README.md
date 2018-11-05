@@ -1,24 +1,11 @@
-# README
+# DataGrapher
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project allows a user to choose demographics and then see a visual representation in graph form.
 
-Things you may want to cover:
+### Technologies Used
 
-* Ruby version
+Rails  
+Javascript  
+JQuery  
+Chart.js  
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
